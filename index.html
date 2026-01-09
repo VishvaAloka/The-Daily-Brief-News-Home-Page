@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Daily Brief | News homepage</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+    * {
+      font-family: 'Inter', sans-serif;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Poppins', sans-serif;
+    }
+
+    /* Smooth animations */
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes scaleIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(241, 94, 80, 0.3);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(241, 94, 80, 0.5);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Animation utilities */
+    .animate-fade-down {
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    .animate-fade-up {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .animate-fade-left {
+      animation: fadeInLeft 0.6s ease-out;
+    }
+
+    .animate-slide-right {
+      animation: slideInRight 0.6s ease-out;
+    }
+
+    .animate-scale-in {
+      animation: scaleIn 0.6s ease-out;
+    }
+
+    .animate-pulse-glow {
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    .animate-float {
+      animation: float 3s ease-in-out infinite;
+    }
+
+    /* Stagger animations */
+    .nav-item {
+      animation: fadeInDown 0.6s ease-out;
+    }
+
+    .nav-item:nth-child(1) { animation-delay: 0.1s; }
+    .nav-item:nth-child(2) { animation-delay: 0.2s; }
+    .nav-item:nth-child(3) { animation-delay: 0.3s; }
+    .nav-item:nth-child(4) { animation-delay: 0.4s; }
+    .nav-item:nth-child(5) { animation-delay: 0.5s; }
+
+    .hero-item {
+      animation: fadeInUp 0.6s ease-out;
+    }
+
+    .hero-item:nth-child(1) { animation-delay: 0.2s; }
+    .hero-item:nth-child(2) { animation-delay: 0.4s; }
+    .hero-item:nth-child(3) { animation-delay: 0.6s; }
+
+    .feature-card {
+      animation: fadeInUp 0.6s ease-out;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+    /* Hover effects */
+    .nav-item:hover {
+      transform: translateY(-2px);
+      color: #f15e50;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .feature-img {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .feature-card:hover .feature-img {
+      transform: scale(1.05);
+    }
+
+    .read-btn {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .read-btn:hover {
+      background-color: #e04535;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(241, 94, 80, 0.3);
+    }
+
+    .icon-box {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #f15e50 0%, #ff7f6b 100%);
+      border-radius: 8px;
+      color: white;
+      font-size: 24px;
+    }
+
+    .news-section {
+      border-left: 3px solid #f15e50;
+      padding-left: 15px;
+      transition: all 0.3s ease;
+    }
+
+    .news-section:hover {
+      border-left-color: #e04535;
+      padding-left: 20px;
+    }
+
+    .sidebar-item {
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-item:hover {
+      padding-left: 10px;
+      color: #f15e50;
+    }
+
+    .new-badge {
+      background: linear-gradient(135deg, #e9ab53 0%, #f5b76f 100%);
+      animation: pulse-glow 2s ease-in-out infinite;
+    }
+
+    /* Image animations */
+    .hero-image {
+      animation: fadeInDown 0.8s ease-out;
+    }
+
+    .feature-img {
+      animation: scaleIn 0.8s ease-out;
+    }
+
+    /* Smooth transitions */
+    * {
+      transition: color 0.3s ease, background-color 0.3s ease;
+    }
+
+    .sidebar-link {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sidebar-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: #f15e50;
+      transition: left 0.3s ease;
+    }
+
+    .sidebar-link:hover::after {
+      left: 0;
+    }
+  </style>
+  <script src="./script.js" defer></script>
+</head>
+<body class="bg-white">
+  <div class="flex justify-center">
+    <div class="max-w-[1180px] w-full m-10">
+      
+      <!-- Navigation Bar -->
+      <nav class="flex justify-between items-center pb-8">
+        <!-- Logo -->
+        <div class="animate-fade-left">
+          <span class="text-3xl font-bold text-gray-900">
+            <i class="fas fa-newspaper mr-2 text-[#f15e50]"></i>The Daily Brief
+          </span>
+        </div>
+
+        <!-- Desktop Links -->
+        <div class="md:flex gap-10 text-gray-800 hidden">
+          <p class="nav-item cursor-pointer hover:text-[#f15e50] font-medium">Home</p>
+          <p class="nav-item cursor-pointer hover:text-[#f15e50] font-medium">News</p>
+          <p class="nav-item cursor-pointer hover:text-[#f15e50] font-medium">Popular</p>
+          <p class="nav-item cursor-pointer hover:text-[#f15e50] font-medium">Trending</p>
+          <p class="nav-item cursor-pointer hover:text-[#f15e50] font-medium">Categories</p>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden">
+          <i class="fas fa-bars text-2xl cursor-pointer text-gray-800" onclick="openMenu()"></i>
+        </div>
+
+        <!-- Sidebar Links -->
+        <div class="md:hidden gap-10 text-gray-800 fixed top-0 right-0 w-80 bg-gradient-to-b from-slate-900 to-slate-800 h-screen p-10 z-10 hidden flex-col" id="sidebarMenu">
+          <div class="flex justify-end cursor-pointer mb-8">
+            <i class="fas fa-times text-3xl text-white" onclick="closeMenu()"></i>
+          </div>
+          <p class="text-2xl font-semibold text-white sidebar-link">Home</p>
+          <p class="text-2xl font-semibold text-white sidebar-link">News</p>
+          <p class="text-2xl font-semibold text-white sidebar-link">Popular</p>
+          <p class="text-2xl font-semibold text-white sidebar-link">Trending</p>
+          <p class="text-2xl font-semibold text-white sidebar-link">Categories</p>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section class="grid grid-cols-1 md:grid-cols-12 mt-10 gap-5">
+        <!-- Main Image -->
+        <div class="md:col-span-8 hero-item">
+          <div class="relative overflow-hidden rounded-lg">
+            <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=80" alt="Web Technology" class="hero-image w-full h-96 object-cover">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/40 to-transparent"></div>
+          </div>
+        </div>
+
+        <!-- News Sidebar -->
+        <div class="md:col-span-4 row-span-2 bg-gradient-to-br from-gray-900 to-gray-800 text-white p-8 flex flex-col gap-6 rounded-lg order-last md:order-none mt-5 md:mt-0 animate-fade-left">
+          <div class="flex items-center gap-3">
+            <span class="text-5xl font-bold text-[#e9ab53]">
+              <i class="fas fa-star"></i>
+            </span>
+            <span class="text-4xl font-bold text-[#e9ab53]">New</span>
+          </div>
+
+          <div class="news-section">
+            <p class="text-lg font-semibold hover:text-[#e9ab53]">Hydrogen VS Electric Cars</p>
+            <p class="text-gray-400 text-sm mt-2">Will hydrogen-fueled cars ever catch up to EVs?</p>
+          </div>
+
+          <hr class="border-gray-700">
+
+          <div class="news-section">
+            <p class="text-lg font-semibold hover:text-[#e9ab53]">The Downsides of AI Artistry</p>
+            <p class="text-gray-400 text-sm mt-2">What are the possible adverse effects of on-demand AI image generation?</p>
+          </div>
+
+          <hr class="border-gray-700">
+
+          <div class="news-section">
+            <p class="text-lg font-semibold hover:text-[#e9ab53]">Is VC Funding Drying Up?</p>
+            <p class="text-gray-400 text-sm mt-2">Private funding by VC firms is down 50% YoY. We take a look at what that means.</p>
+          </div>
+        </div>
+
+        <!-- Hero Text -->
+        <div class="md:col-span-4 hero-item">
+          <h1 class="text-6xl md:text-5xl lg:text-6xl font-bold text-gray-900">The Bright Future of Web 3.0?</h1>
+        </div>
+
+        <!-- Hero Description -->
+        <div class="md:col-span-4 hero-item">
+          <p class="text-gray-700 leading-relaxed">
+            We dive into the next evolution of the web that claims to put the power of the platforms back into the hands of the people. But is it really fulfilling its promise?
+          </p>
+          <button class="read-btn bg-[#f15e50] text-white font-semibold px-10 py-4 tracking-widest mt-8 rounded hover:bg-[#e04535] flex items-center gap-2">
+            READ MORE
+            <i class="fas fa-arrow-right text-sm"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- Feature Section -->
+      <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-20 gap-8">
+        <!-- Feature Card 1 -->
+        <div class="feature-card bg-white rounded-lg overflow-hidden shadow-lg">
+          <div class="relative overflow-hidden h-48">
+            <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=500&q=80" alt="Retro PCs" class="feature-img w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex items-start gap-4">
+              <div class="icon-box">
+                <i class="fas fa-microchip"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-4xl font-bold text-[#e9ab53] mb-2">01</p>
+                <p class="text-xl font-semibold text-gray-900">Reviving Retro PCs</p>
+                <p class="text-gray-600 text-sm mt-3">What happens when old PCs are given modern upgrades?</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Card 2 -->
+        <div class="feature-card bg-white rounded-lg overflow-hidden shadow-lg">
+          <div class="relative overflow-hidden h-48">
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500&q=80" alt="Top Laptops" class="feature-img w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex items-start gap-4">
+              <div class="icon-box" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <i class="fas fa-laptop"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-4xl font-bold text-[#667eea] mb-2">02</p>
+                <p class="text-xl font-semibold text-gray-900">Top 10 Laptops of 2024</p>
+                <p class="text-gray-600 text-sm mt-3">Our best picks for various needs and budgets.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Card 3 -->
+        <div class="feature-card bg-white rounded-lg overflow-hidden shadow-lg">
+          <div class="relative overflow-hidden h-48">
+            <img src="https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?w=500&q=80" alt="Gaming Growth" class="feature-img w-full h-full object-cover">
+          </div>
+          <div class="p-6">
+            <div class="flex items-start gap-4">
+              <div class="icon-box" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                <i class="fas fa-gamepad"></i>
+              </div>
+              <div class="flex-1">
+                <p class="text-4xl font-bold text-[#f5576c] mb-2">03</p>
+                <p class="text-xl font-semibold text-gray-900">The Growth of Gaming</p>
+                <p class="text-gray-600 text-sm mt-3">How the pandemic has sparked fresh opportunities in the gaming industry.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="mt-20 pt-10 border-t border-gray-200">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-gray-600 text-sm">© 2026 News Homepage. All rights reserved.</p>
+          <div class="flex gap-6">
+            <a href="#" class="text-gray-600 hover:text-[#f15e50] transition-colors">
+              <i class="fab fa-facebook text-2xl"></i>
+            </a>
+            <a href="#" class="text-gray-600 hover:text-[#f15e50] transition-colors">
+              <i class="fab fa-twitter text-2xl"></i>
+            </a>
+            <a href="#" class="text-gray-600 hover:text-[#f15e50] transition-colors">
+              <i class="fab fa-instagram text-2xl"></i>
+            </a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    function openMenu() {
+      document.getElementById('sidebarMenu').classList.remove('hidden');
+      document.getElementById('sidebarMenu').classList.add('flex');
+    }
+
+    function closeMenu() {
+      document.getElementById('sidebarMenu').classList.add('hidden');
+      document.getElementById('sidebarMenu').classList.remove('flex');
+    }
+  </script>
+</body>
+</html>
